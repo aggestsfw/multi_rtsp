@@ -4,7 +4,7 @@ project(deepstream-app-cmake LANGUAGES C CXX)
 #set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "-std=c++17")
 
-set(CMAKE_BUILD_TYPE "Release")
+set(CMAKE_BUILD_TYPE "Debug")
 
 if(CMAKE_BUILD_TYPE AND (CMAKE_BUILD_TYPE STREQUAL "Debug"))
     message("Debug mode:${CMAKE_C_FLAGS_DEBUG}")
@@ -18,8 +18,6 @@ endif()
 
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-#set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_BUILD_TYPE Release)
 
 #set_target_properties(deepstream-app PROPERTIES CUDA_ARCHITECTURES "86")
 
@@ -78,7 +76,7 @@ add_executable(${PROJECT_NAME}
         deepstream_app.c
         deepstream_app_config_parser.c
         deepstream_app_config_parser_yaml.cpp
-        deepstream_app_main.c
+        deepstream_app_main.cpp
         )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
