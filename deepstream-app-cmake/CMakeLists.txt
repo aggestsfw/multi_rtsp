@@ -45,21 +45,25 @@ SET(DEEPSTREAMAPP
 #        BUILD_IN_SOURCE true
 #        )
 
-file(GLOB_RECURSE  DEEPSTREAMAPPCOMMONOBJ "/opt/nvidia/deepstream/deepstream/sources/apps/apps-common/src/*.o")
+#file(GLOB_RECURSE  DEEPSTREAMAPPCOMMONOBJ "/opt/nvidia/deepstream/deepstream/sources/apps/apps-common/src/*.o")
+include_directories(/opt/nvidia/deepstream/deepstream/sources/apps/apps-common/includes)
+aux_source_directory(/opt/nvidia/deepstream/deepstream/sources/apps/apps-common/src APP_COMMON_SRC)
+aux_source_directory(/opt/nvidia/deepstream/deepstream/sources/apps/apps-common/src/deepstream-yaml APP_COMMON_SRC_YAML)
+
 
 #下面这两句不能加，加了会编译错
 #file(GLOB_RECURSE  DEEPSTREAMAPPOBJ "/opt/nvidia/deepstream/deepstream/sources/apps/sample_apps/deepstream-app-cmake/*.o")
 #list(REMOVE_ITEM DEEPSTREAMAPPOBJ "/opt/nvidia/deepstream/deepstream/sources/apps/sample_apps/deepstream-app-cmake/deepstream_app_main.o")
 
-message(DEEPSTREAMAPPCOMMONOBJ="${DEEPSTREAMAPPCOMMONOBJ}")
-message(DEEPSTREAMAPPOBJ="${DEEPSTREAMAPPOBJ}")
+#message(DEEPSTREAMAPPCOMMONOBJ="${DEEPSTREAMAPPCOMMONOBJ}")
+#message(DEEPSTREAMAPPOBJ="${DEEPSTREAMAPPOBJ}")
 
 
-SET(OBJS
-        ${DEEPSTREAMAPPCOMMONOBJ}
-        ${DEEPSTREAMAPPOBJ}
-        /opt/nvidia/deepstream/deepstream/sources/apps/apps-common/src/deepstream_config_file_parser.o
-        )
+#SET(OBJS
+#        ${DEEPSTREAMAPPCOMMONOBJ}
+#        ${DEEPSTREAMAPPOBJ}
+#        /opt/nvidia/deepstream/deepstream/sources/apps/apps-common/src/deepstream_config_file_parser.o
+#        )
 
 SET_SOURCE_FILES_PROPERTIES(
         ${OBJS}
@@ -68,11 +72,13 @@ SET_SOURCE_FILES_PROPERTIES(
         GENERATED true
 )
 
-file(GLOB native_srcs "/opt/nvidia/deepstream/deepstream/sources/apps/apps-common/src/*.c")
-file(GLOB native_srcs "/opt/nvidia/deepstream/deepstream/sources/apps/apps-common/src/deepstream-yaml/*.cpp")
+#file(GLOB native_srcs "/opt/nvidia/deepstream/deepstream/sources/apps/apps-common/src/*.c")
+#file(GLOB native_srcs "/opt/nvidia/deepstream/deepstream/sources/apps/apps-common/src/deepstream-yaml/*.cpp")
 
 add_executable(${PROJECT_NAME}
-        ${OBJS}
+#        ${OBJS}
+        ${APP_COMMON_SRC}
+        ${APP_COMMON_SRC_YAML}
         deepstream_app.c
         deepstream_app_config_parser.c
         deepstream_app_config_parser_yaml.cpp

@@ -1593,10 +1593,15 @@ create_pipeline (AppCtx * appCtx,
     g_object_set (pipeline->multi_src_bin.nvmultiurisrcbin, "sei-uuid",
         config->sei_uuid, NULL);
   } else {
+      //这个函数在/opt/nvidia/deepstream/deepstream/sources/apps/apps-common/src/的
+      // 源文件deepstream_source_bin.c中
+      //这个函数同时创建和插入了元件streammux，视频流如create_rtsp_src_bin，create_camera_source_bin
+      //里面的gst_bin_add只是将元件插入到pipeline->multi_src_bin.bin，没有插入到pipeline
     if (!create_multi_source_bin (config->num_source_sub_bins,
             config->multi_source_config, &pipeline->multi_src_bin))
       goto done;
   }
+  //所以这里再插入到pipeline
   gst_bin_add (GST_BIN (pipeline->pipeline), pipeline->multi_src_bin.bin);
 
 
@@ -1606,7 +1611,8 @@ create_pipeline (AppCtx * appCtx,
       /** overriding mux_config.batch_size to max_batch_size */
       config->streammux_config.batch_size = config->max_batch_size;
     }
-
+    //这个函数在/opt/nvidia/deepstream/deepstream/sources/apps/apps-common/src/的
+      //  文件deepstream_streammux.c中
     if (!set_streammux_properties (&config->streammux_config,
             pipeline->multi_src_bin.streammux)) {
       NVGSTDS_WARN_MSG_V ("Failed to set streammux properties");

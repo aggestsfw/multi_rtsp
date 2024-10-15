@@ -86,7 +86,7 @@ all_bbox_generated (AppCtx * appCtx, GstBuffer * buf,
 {
   guint num_male = 0;
   guint num_female = 0;
-  guint num_objects[128];
+  guint num_objects[128];//128类目标
 
   memset (num_objects, 0, sizeof (num_objects));
 
@@ -609,7 +609,7 @@ int main (int argc, char *argv[])
 
   ctx = g_option_context_new ("Nvidia DeepStream Demo");
   group = g_option_group_new ("abc", NULL, NULL, NULL, NULL);
-  g_option_group_add_entries (group, entries);
+  g_option_group_add_entries (group, entries);//entries是命令行参数
 
   g_option_context_set_main_group (ctx, group);
   g_option_context_add_group (ctx, gst_init_get_option_group ());
@@ -681,6 +681,7 @@ int main (int argc, char *argv[])
     }
   }
 
+  //appCtx是用来保存整条pipeline流水线的参数，包括配置文件参数
   for (i = 0; i < num_instances; i++) {
     if (!create_pipeline (appCtx[i], NULL,
             all_bbox_generated, perf_cb, overlay_graphics)) {
